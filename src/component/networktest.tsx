@@ -91,20 +91,20 @@ export default function NetworkTest({ onFinish }: { onFinish: (duration: number)
       {!ready ? (
         <>
           <p className="mb-6 text-gray-700">Pronto para o teste?</p>
-          <button className="bg-blue-600 text-white rounded-full px-6 py-2 mb-4 hover:bg-blue-700 transition" onClick={handleReady}>
+          <button className="bg-green-900 text-white rounded-full px-6 py-2 mb-4 hover:bg-green-800 transition" onClick={handleReady}>
             SIM
           </button>
         </>
       ) : (
         <>
-          <button className="bg-blue-600 text-white rounded-full px-6 py-2 mb-4 hover:bg-blue-700 transition" onClick={handleStartTest} disabled={networkLoading}>
+          <button className="bg-green-900 text-white rounded-full px-6 py-2 mb-4 hover:bg-green-800 transition" onClick={handleStartTest} disabled={networkLoading}>
             {networkLoading ? 'Testando...' : 'Começar Teste de Rede'}
           </button>
       {/* Barra de progresso durante o teste */}
       {(!testDone && !networkError && !ready && !networkLoading) ? null : (networkLoading && !testDone) ? <ProgressBar value={progress} /> : null}
           <div className="w-full flex flex-col items-center mt-2">
-            {downloadMbps && (<p className="text-green-600">Download: {downloadMbps} Mbps</p>)}
-            {uploadMbps && (<p className="text-green-600">Upload: {uploadMbps} Mbps</p>)}
+            {downloadMbps && (<p className="text-green-900">Download: {downloadMbps} Mbps</p>)}
+            {uploadMbps && (<p className="text-green-900">Upload: {uploadMbps} Mbps</p>)}
             {networkError && (
               <>
                 <p className="text-red-500 mt-2">{networkError}</p>
@@ -116,9 +116,9 @@ export default function NetworkTest({ onFinish }: { onFinish: (duration: number)
             {downloadMbps && uploadMbps && !networkError && (
               <div className="mt-4">
                 {parseFloat(downloadMbps) >= 25 && parseFloat(uploadMbps) >= 3 ? (
-                  <span className="text-blue-700 font-bold">Conexão boa para streaming e videoconferência.</span>
+                  <span className="font-bold">Conexão boa para videoconferência.</span>
                 ) : (
-                  <span className="text-yellow-700 font-bold">Conexão abaixo do ideal para streaming/videoconferência.</span>
+                  <span className="font-bold">Conexão abaixo do ideal para videoconferência.</span>
                 )}
               </div>
             )}
@@ -126,7 +126,7 @@ export default function NetworkTest({ onFinish }: { onFinish: (duration: number)
           {testDone && !networkError && (
             <>
               <div className="w-full flex flex-col items-center mt-4">
-                <p className="text-green-700 font-bold mb-2">Teste de rede realizado!</p>
+                <p className="text-green-900 font-bold mb-2">Teste de rede realizado!</p>
                 {preTestDuration !== null && (
                   <p className="text-gray-700 mb-2">Tempo de preparação: {preTestDuration.toFixed(2)} segundos</p>
                 )}
@@ -134,7 +134,7 @@ export default function NetworkTest({ onFinish }: { onFinish: (duration: number)
                   <p className="text-gray-700 mb-2">Duração do teste: {testDuration.toFixed(2)} segundos</p>
                 )}
               </div>
-              <button className="mt-6 bg-green-600 text-white rounded-full px-6 py-2 hover:bg-green-700 transition" onClick={() => { setTestDone(false); if (preTestDuration !== null) onFinish(preTestDuration); }}>
+              <button className="mt-6 bg-green-900 text-white rounded-full px-6 py-2 hover:bg-green-800 transition" onClick={() => { setTestDone(false); if (preTestDuration !== null) onFinish(preTestDuration); }}>
                 Ir para o próximo teste
               </button>
             </>
