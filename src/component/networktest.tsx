@@ -3,7 +3,12 @@ import React, { useRef, useState } from 'react';
 
 const TEST_FILE_URL = 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
-export default function NetworkTest({ onFinish }: { onFinish: (duration: number) => void }) {
+export default function NetworkTest({ onFinish }: { onFinish: (result: {
+  downloadMbps: number,
+  uploadMbps: number,
+  prepDuration: number,
+  status: "success" | "failure"
+}) => void }) {
   const [progress, setProgress] = useState(0);
   const [ready, setReady] = useState(false);
   const [timerStart, setTimerStart] = useState<number | null>(null);
@@ -108,7 +113,17 @@ export default function NetworkTest({ onFinish }: { onFinish: (duration: number)
             {networkError && (
               <>
                 <p className="text-red-500 mt-2">{networkError}</p>
-                <button className="mt-6 bg-green-600 text-white rounded-full px-6 py-2 hover:bg-green-700 transition" onClick={() => { setTestDone(false); onFinish(0); }}>
+                <button 
+                    className="mt-6 bg-green-600 text-white rounded-full px-6 py-2 hover:bg-green-700 transition" 
+                    onClick={() => { setTestDone(false); 
+                    onFinish({
+                        downloadMbps: 0,
+                        uploadMbps: 0,
+                        prepDuration: preTestDuration ?? 0,
+                        status: "failure"
+                    });
+                    }}
+                >        
                   Ir para o próximo teste
                 </button>
               </>
@@ -134,7 +149,20 @@ export default function NetworkTest({ onFinish }: { onFinish: (duration: number)
                   <p className="text-gray-700 mb-2">Duração do teste: {testDuration.toFixed(2)} segundos</p>
                 )}
               </div>
-              <button className="mt-6 bg-green-900 text-white rounded-full px-6 py-2 hover:bg-green-800 transition" onClick={() => { setTestDone(false); if (preTestDuration !== null) onFinish(preTestDuration); }}>
+              <button 
+                className="mt-6 bg-green-900 text-white rounded-full px-6 py-2 hover:bg-green-800 transition" 
+                onClick={() => { 
+                    setTestDone(false); 
+                    if (preTestDuration !== null && downloadMbps && uploadMbps) {
+                        onFinish({
+                            downloadMbps: parseFloat(downloadMbps),
+                            uploadMbps: parseFloat(uploadMbps),
+                            prepDuration: preTestDuration,
+                            status: (parseFloat(downloadMbps) >= 25 && parseFloat(uploadMbps) >= 3) ? "success" : "failure"
+                        });
+                    }
+                }}
+            >
                 Ir para o próximo teste
               </button>
             </>
