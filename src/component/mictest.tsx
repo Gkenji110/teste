@@ -95,7 +95,7 @@ export function MicTest({
       <div className="bg-bg-escurinho p-3 rounded">
         <p>
           Microfone disponível: {results.mic?.supported ? "Sim" : "—"}{" "}
-          {renderStatus(results.mic?.status)}
+          {renderStatus ? renderStatus(results.mic?.status) : null}
         </p>
       </div>
       <div className="mt-4 flex flex-wrap justify-between gap-2">

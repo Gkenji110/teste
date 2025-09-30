@@ -32,7 +32,7 @@ export function CameraTest({
             />
             {results.camera && (
               <div className="absolute top-2 right-2">
-                {renderStatus(results.camera.status)}
+                {renderStatus? renderStatus(results.camera.status) : null}
               </div>
             )}
           </div>
