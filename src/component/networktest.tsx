@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
-  const TEST_DURATION = 3; // segundos
+  const TEST_DURATION = 10; // segundos
 
-const TEST_FILE_URL = 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+const TEST_FILE_URL = 'https://speed.hetzner.de/1MB.bin';
 
 export default function NetworkTest({ onFinish }: { onFinish: (result: {
   downloadMbps: number,
