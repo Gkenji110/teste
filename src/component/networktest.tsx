@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-const TEST_DURATION = 10; // segundos
+const TEST_DURATION = 50; // segundos
 
 const TEST_FILE_URL = 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
