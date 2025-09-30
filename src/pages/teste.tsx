@@ -328,8 +328,8 @@ export function Teste() {
             <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-4">
               <button
                 className={`px-3 py-1 rounded w-full sm:w-auto ${step === "connectivity"
-                    ? "bg-verde-escuro text-white"
-                    : "bg-quase-branco"
+                  ? "bg-verde-escuro text-white"
+                  : "bg-quase-branco"
                   }`}
                 onClick={() => setStep("connectivity")}
               >
@@ -337,8 +337,8 @@ export function Teste() {
               </button>
               <button
                 className={`px-3 py-1 rounded w-full sm:w-auto ${step === "camera"
-                    ? "bg-verde-escuro text-white"
-                    : "bg-quase-branco"
+                  ? "bg-verde-escuro text-white"
+                  : "bg-quase-branco"
                   }`}
                 onClick={() => setStep("camera")}
               >
@@ -346,8 +346,8 @@ export function Teste() {
               </button>
               <button
                 className={`px-3 py-1 rounded w-full sm:w-auto ${step === "mic"
-                    ? "bg-verde-escuro text-white"
-                    : "bg-quase-branco"
+                  ? "bg-verde-escuro text-white"
+                  : "bg-quase-branco"
                   }`}
                 onClick={() => setStep("mic")}
               >
@@ -377,35 +377,35 @@ export function Teste() {
             )}
 
             {step === "camera" && (
-  <CameraTest
-    busy={busy}
-    results={results}
-    setResults={setResults}
-    startCamera={startCamera}
-    stopCamera={stopCamera}
-    videoRef={videoRef}
-    renderStatus={renderStatus}
-    setStep={setStep}
-  />
-)}
+              <CameraTest
+                busy={busy}
+                results={results}
+                setResults={setResults}
+                startCamera={startCamera}
+                stopCamera={stopCamera}
+                videoRef={videoRef}
+                renderStatus={renderStatus}
+                setStep={setStep}
+              />
+            )}
 
-{step === "mic" && (
-  <MicTest
-    busy={busy}
-    micError={micError}
-    micDevices={micDevices}
-    selectedMic={selectedMic}
-    setSelectedMic={setSelectedMic}
-    requestPermissionAndList={requestPermissionAndList}
-    enumerateMics={enumerateMics}
-    listening={listening}
-    startListening={startListening}
-    stopListening={stopListening}
-    results={results}
-    renderStatus={renderStatus}
-    setStep={setStep}
-  />
-)}
+            {step === "mic" && (
+              <MicTest
+                busy={busy}
+                micError={micError}
+                micDevices={micDevices}
+                selectedMic={selectedMic}
+                setSelectedMic={setSelectedMic}
+                requestPermissionAndList={requestPermissionAndList}
+                enumerateMics={enumerateMics}
+                listening={listening}
+                startListening={startListening}
+                stopListening={stopListening}
+                results={results}
+                renderStatus={renderStatus}
+                setStep={setStep}
+              />
+            )}
 
             {/* --- DONE --- */}
             {step === "done" && (
