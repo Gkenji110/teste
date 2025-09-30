@@ -6,7 +6,7 @@ type Props = {
   setResults: (fn: (prev: any) => any) => void;
   startCamera: () => void;
   stopCamera: () => void;
-  videoRef: React.RefObject<HTMLVideoElement>;
+  videoRef: React.RefObject<HTMLVideoElement | null>;
   renderStatus: (status?: string) => React.ReactNode;
   setStep: (step: string) => void;
 };
