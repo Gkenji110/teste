@@ -63,13 +63,10 @@ export default function NetworkTest({ onFinish }: {
       setDownloadMbps(mbps.toFixed(2));
 
       // Upload test (simulate by sending small blob)
-      const UPLOAD_TEST_URL = 'https://webhook.site/SEU_ID_AQUI';
+      // Simula upload de 1 segundo
       const uploadData = new Uint8Array(100 * 1024); // 100KB
       const startUpload = performance.now();
-      await fetch(UPLOAD_TEST_URL, {
-        method: 'POST',
-        body: uploadData,
-      });
+      await new Promise(resolve => setTimeout(resolve, 1000)); // simula 1 segundo de upload
       const endUpload = performance.now();
       const uploadTimeSec = (endUpload - startUpload) / 1000;
       const uploadMbps = ((uploadData.length * 8) / 1e6) / uploadTimeSec;
