@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-const TEST_DURATION = 50; // segundos
+const TEST_DURATION = 30; // segundos
 
 const TEST_FILE_URL = 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
@@ -63,14 +63,18 @@ export default function NetworkTest({ onFinish }: {
       setDownloadMbps(mbps.toFixed(2));
 
       // Upload test (simulate by sending small blob)
-      // Simula upload de 1 segundo
+      const UPLOAD_TEST_URL = '/api/upload'; // ou URL completa se testar de outro domínio
       const uploadData = new Uint8Array(100 * 1024); // 100KB
       const startUpload = performance.now();
-      await new Promise(resolve => setTimeout(resolve, 1000)); // simula 1 segundo de upload
+      await fetch(UPLOAD_TEST_URL, {
+        method: 'POST',
+        body: uploadData,
+      });
       const endUpload = performance.now();
       const uploadTimeSec = (endUpload - startUpload) / 1000;
       const uploadMbps = ((uploadData.length * 8) / 1e6) / uploadTimeSec;
       setUploadMbps(uploadMbps.toFixed(2));
+
       running = false;
       setNetworkLoading(false);
       setTestDone(true);
