@@ -1,14 +1,16 @@
 import React, { useRef, useState } from 'react';
-  const TEST_DURATION = 10; // segundos
+const TEST_DURATION = 10; // segundos
 
 const TEST_FILE_URL = 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 
-export default function NetworkTest({ onFinish }: { onFinish: (result: {
-  downloadMbps: number,
-  uploadMbps: number,
-  prepDuration: number,
-  status: "success" | "failure"
-}) => void }) {
+export default function NetworkTest({ onFinish }: {
+  onFinish: (result: {
+    downloadMbps: number,
+    uploadMbps: number,
+    prepDuration: number,
+    status: "success" | "failure"
+  }) => void
+}) {
   const [progress, setProgress] = useState(0);
   const [ready, setReady] = useState(false);
   const [timerStart, setTimerStart] = useState<number | null>(null);
@@ -61,9 +63,10 @@ export default function NetworkTest({ onFinish }: { onFinish: (result: {
       setDownloadMbps(mbps.toFixed(2));
 
       // Upload test (simulate by sending small blob)
+      const UPLOAD_TEST_URL = 'https://webhook.site/SEU_ID_AQUI';
       const uploadData = new Uint8Array(100 * 1024); // 100KB
       const startUpload = performance.now();
-      await fetch('https://httpbin.org/post', {
+      await fetch(UPLOAD_TEST_URL, {
         method: 'POST',
         body: uploadData,
       });
@@ -71,16 +74,16 @@ export default function NetworkTest({ onFinish }: { onFinish: (result: {
       const uploadTimeSec = (endUpload - startUpload) / 1000;
       const uploadMbps = ((uploadData.length * 8) / 1e6) / uploadTimeSec;
       setUploadMbps(uploadMbps.toFixed(2));
-  running = false;
-  setNetworkLoading(false);
-  setTestDone(true);
-  setProgress(100);
+      running = false;
+      setNetworkLoading(false);
+      setTestDone(true);
+      setProgress(100);
     } catch (err) {
-  running = false;
-  setNetworkError('Erro ao testar a rede.');
-  setProgress(0);
-  setNetworkLoading(false);
-  setTestDone(true);
+      running = false;
+      setNetworkError('Erro ao testar a rede.');
+      setProgress(0);
+      setNetworkLoading(false);
+      setTestDone(true);
     }
   };
   // Barra de progresso
@@ -91,7 +94,7 @@ export default function NetworkTest({ onFinish }: { onFinish: (result: {
   );
 
   return (
-  <div className="network-card">
+    <div className="network-card">
       <h2 className="text-lg font-semibold mb-4">Teste de Rede</h2>
       {!ready ? (
         <>
@@ -105,25 +108,26 @@ export default function NetworkTest({ onFinish }: { onFinish: (result: {
           <button className="bg-green-900 text-white rounded-full px-6 py-2 mb-4 hover:bg-green-800 transition" onClick={handleStartTest} disabled={networkLoading}>
             {networkLoading ? 'Testando...' : 'Começar Teste de Rede'}
           </button>
-      {/* Barra de progresso durante o teste */}
-      {(!testDone && !networkError && !ready && !networkLoading) ? null : (networkLoading && !testDone) ? <ProgressBar value={progress} /> : null}
+          {/* Barra de progresso durante o teste */}
+          {(!testDone && !networkError && !ready && !networkLoading) ? null : (networkLoading && !testDone) ? <ProgressBar value={progress} /> : null}
           <div className="w-full flex flex-col items-center mt-2">
             {downloadMbps && (<p className="text-green-900">Download: {downloadMbps} Mbps</p>)}
             {uploadMbps && (<p className="text-green-900">Upload: {uploadMbps} Mbps</p>)}
             {networkError && (
               <>
                 <p className="text-red-500 mt-2">{networkError}</p>
-                <button 
-                    className="mt-6 bg-green-600 text-white rounded-full px-6 py-2 hover:bg-green-700 transition" 
-                    onClick={() => { setTestDone(false); 
+                <button
+                  className="mt-6 bg-green-600 text-white rounded-full px-6 py-2 hover:bg-green-700 transition"
+                  onClick={() => {
+                    setTestDone(false);
                     onFinish({
-                        downloadMbps: 0,
-                        uploadMbps: 0,
-                        prepDuration: preTestDuration ?? 0,
-                        status: "failure"
+                      downloadMbps: 0,
+                      uploadMbps: 0,
+                      prepDuration: preTestDuration ?? 0,
+                      status: "failure"
                     });
-                    }}
-                >        
+                  }}
+                >
                   Ir para o próximo teste
                 </button>
               </>
@@ -149,20 +153,20 @@ export default function NetworkTest({ onFinish }: { onFinish: (result: {
                   <p className="text-gray-700 mb-2">Duração do teste: {testDuration.toFixed(2)} segundos</p>
                 )}
               </div>
-              <button 
-                className="mt-6 bg-green-900 text-white rounded-full px-6 py-2 hover:bg-green-800 transition" 
-                onClick={() => { 
-                    setTestDone(false); 
-                    if (preTestDuration !== null && downloadMbps && uploadMbps) {
-                        onFinish({
-                            downloadMbps: parseFloat(downloadMbps),
-                            uploadMbps: parseFloat(uploadMbps),
-                            prepDuration: preTestDuration,
-                            status: (parseFloat(downloadMbps) >= 25 && parseFloat(uploadMbps) >= 3) ? "success" : "failure"
-                        });
-                    }
+              <button
+                className="mt-6 bg-green-900 text-white rounded-full px-6 py-2 hover:bg-green-800 transition"
+                onClick={() => {
+                  setTestDone(false);
+                  if (preTestDuration !== null && downloadMbps && uploadMbps) {
+                    onFinish({
+                      downloadMbps: parseFloat(downloadMbps),
+                      uploadMbps: parseFloat(uploadMbps),
+                      prepDuration: preTestDuration,
+                      status: (parseFloat(downloadMbps) >= 25 && parseFloat(uploadMbps) >= 3) ? "success" : "failure"
+                    });
+                  }
                 }}
-            >
+              >
                 Ir para o próximo teste
               </button>
             </>
