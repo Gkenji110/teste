@@ -384,6 +384,8 @@ export function Teste() {
                 startCamera={startCamera}
                 stopCamera={stopCamera}
                 videoRef={videoRef}
+                renderStatus={renderStatus}
+                setStep={setStep}
               />
             )}
 

@@ -1,5 +1,8 @@
 import React from "react";
 
+type TestStatus = "pending" | "success" | "failure";
+type Step = "connectivity" | "camera" | "mic" | "done";
+
 type Props = {
   busy: boolean;
   results: any;
@@ -7,8 +10,8 @@ type Props = {
   startCamera: () => void;
   stopCamera: () => void;
   videoRef: React.RefObject<HTMLVideoElement | null>;
-  renderStatus: (status?: string) => React.ReactNode;
-  setStep: (step: string) => void;
+  renderStatus?: (status?: TestStatus) => React.ReactNode;
+  setStep: (step: Step) => void;
 };
 
 export function CameraTest({

@@ -1,5 +1,7 @@
 import React from "react";
 
+type TestStatus = "pending" | "success" | "failure";
+
 type MicDevice = {
   deviceId: string;
   label: string;
@@ -17,8 +19,8 @@ type Props = {
   startListening: () => void;
   stopListening: () => void;
   results: any;
-  renderStatus: (status?: string) => React.ReactNode;
-  setStep: (step: string) => void;
+  renderStatus?: (status?: TestStatus) => React.ReactNode;
+  setStep: (step: "connectivity" | "camera" | "mic" | "done") => void;
 };
 
 export function MicTest({
